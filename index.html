@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VELOCITY30 — The Fastest Cars Of The 30 Biggest Car Companies In The World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#top" class="logo">
+        <span class="logo-bolt">⚡</span>VELOCITY<span class="accent">30</span>
+      </a>
+      <div class="nav-links">
+        <a href="#leaderboard">Leaderboard</a>
+        <a href="#top" class="nav-cta">The Index</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="top" class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="eyebrow">// THE DEFINITIVE INDEX OF SPEED</p>
+      <h1>FASTEST CAR<br><span class="grad">OF EVERY MAJOR BRAND</span></h1>
+      <p class="hero-sub">
+        Motors that define true speed and the test of time. Blink and there gone. 
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">30</span><span class="stat-label">Brands Ranked</span></div>
+        <div class="stat"><span class="stat-num">330</span><span class="stat-label">mph Fastest</span></div>
+        <div class="stat"><span class="stat-num">8</span><span class="stat-label">Electric</span></div>
+      </div>
+      <a href="#leaderboard" class="hero-cta">VIEW THE RANKINGS <span>↓</span></a>
+    </div>
+  </header>
+
+  <main id="leaderboard">
+    <div class="toolbar">
+      <h2 class="section-title">THE <span class="accent">TOP 30</span></h2>
+      <div class="filter-chips" id="filters">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="gas">Gasoline</button>
+        <button class="chip" data-filter="hybrid">Hybrid</button>
+        <button class="chip" data-filter="ev">Electric</button>
+      </div>
+      <p class="count" id="count"></p>
+    </div>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-brand"><span class="logo-bolt">⚡</span>VELOCITY<span class="accent">30</span></p>
+      <p class="foot-note">Figures reflect manufacturer claims and verified records. Top speed in mph, 0-60 in seconds. Ranks ordered by top speed, fastest to least fast.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
