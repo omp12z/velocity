@@ -513,6 +513,39 @@ const cars = [
   }
 ];
 
+const CAR_IMAGES = {
+  1: "images/koenigsegg-jesko-absolut.jpg",
+  2: "images/bugatti-chiron-super-sport-300.jpg",
+  3: "images/ssc-tuatara.jpg",
+  4: "images/hennessey-venom-f5.jpg",
+  5: "images/rimac-nevera.jpg",
+  6: "images/mclaren-speedtail.jpg",
+  7: "images/aston-martin-valkyrie.jpg",
+  8: "images/pagani-huayra-bc.jpg",
+  9: "images/lucid-air-sapphire.jpg",
+  10: "images/chevrolet-corvette-zr1.jpg",
+  11: "images/mercedes-amg-one.jpg",
+  12: "images/lamborghini-revuelto.jpg",
+  13: "images/pininfarina-battista.jpg",
+  14: "images/lotus-evija.jpg",
+  15: "images/porsche-911-gt2-rs.jpg",
+  16: "images/bentley-continental-gt-speed.jpg",
+  17: "images/tesla-model-s-plaid.jpg",
+  18: "images/jaguar-f-type-svr.jpg",
+  19: "images/audi-r8-v10-gt.jpg",
+  20: "images/ferrari-sf90-xx-stradale.jpg",
+  21: "images/nissan-gt-r-nismo.jpg",
+  22: "images/bmw-m5-cs.jpg",
+  23: "images/ford-mustang-shelby-gt500.jpg",
+  24: "images/honda-civic-type-r.jpg",
+  25: "images/dodge-challenger-srt-demon.jpg",
+  26: "images/hyundai-ioniq-5-n.jpg",
+  27: "images/kia-ev6-gt.jpg",
+  28: "images/toyota-gr-supra.jpg",
+  29: "images/rolls-royce-spectre.jpg",
+  30: "images/polestar-1.jpg",
+};
+
 const MAX_SPEED = 330;
 
 const TYPE_LABELS = {
@@ -529,15 +562,16 @@ const TYPE_TAGS = {
 
 function cardHTML(car) {
   const pct = Math.min(100, Math.round((car.topMph / MAX_SPEED) * 100));
+  const img = CAR_IMAGES[car.rank];
   return `
     <article class="card reveal" data-type="${car.type}">
       <span class="ghost-rank">${String(car.rank).padStart(2, "0")}</span>
+      ${img ? `<div class="card-img"><img src="${img}" alt="${car.brand} ${car.model}" loading="lazy"></div>` : ""}
+      <div class="card-body">
       <div class="card-top">
         <span class="rank ${car.rank > 10 ? "rank-muted" : ""}">#${String(car.rank).padStart(2, "0")}</span>
         <div class="card-top-right">
-          <span class="tag ${TYPE_TAGS[car.type]}">
-            ${car.type === "ev" ? "⚡" : car.type === "hybrid" ? "◈" : "◆"} ${TYPE_LABELS[car.type]}
-          </span>
+          <span class="tag ${TYPE_TAGS[car.type]}">${TYPE_LABELS[car.type]}</span>
           <span class="year">${car.year}</span>
         </div>
       </div>
@@ -567,6 +601,7 @@ function cardHTML(car) {
         <span>${pct}% of #1</span>
       </div>
       <p class="desc">${car.description}</p>
+      </div>
     </article>
   `;
 }
