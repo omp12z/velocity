@@ -191,11 +191,11 @@ body {
 /* ---------- HERO ---------- */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 86vh;
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding: calc(var(--nav-h) + 40px) 24px 60px;
+  padding: calc(var(--nav-h) + 36px) 24px 48px;
 }
 
 .hero-bg {
@@ -264,7 +264,7 @@ body {
   display: flex;
   justify-content: center;
   gap: clamp(24px, 6vw, 72px);
-  margin: 44px 0 38px;
+  margin: 32px 0 30px;
 }
 
 .stat {
