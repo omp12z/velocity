@@ -885,7 +885,8 @@ main {
 }
 
 /* ---------- THEME TOGGLE ---------- */
-.theme-toggle {
+.theme-toggle,
+.music-toggle {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -897,12 +898,14 @@ main {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.theme-toggle:hover {
+.theme-toggle:hover,
+.music-toggle:hover {
   border-color: var(--line-bright);
   box-shadow: 0 0 16px var(--green-glow);
 }
 
-.theme-icon {
+.theme-icon,
+.m-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -916,7 +919,8 @@ main {
   transition: all 0.2s ease;
 }
 
-.theme-icon.active {
+.theme-icon.active,
+.m-icon.active {
   background: var(--green);
   color: #031004;
   box-shadow: 0 0 14px var(--green-glow);

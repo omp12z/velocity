@@ -836,4 +836,46 @@ themeToggle.addEventListener("click", () => {
 
 applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark");
 
+/* ---------- MUSIC ---------- */
+const musicToggle = document.getElementById("musicToggle");
+const music = new Audio("audio/background.mp3");
+music.loop = true;
+music.volume = 0.5;
+music.preload = "auto";
+
+function setMusicState(playing) {
+  musicToggle.classList.toggle("active", playing);
+  musicToggle.setAttribute("aria-pressed", String(playing));
+  musicToggle.querySelector(".m-icon-play").classList.toggle("active", playing);
+  musicToggle.querySelector(".m-icon-mute").classList.toggle("active", !playing);
+}
+
+function tryPlay() {
+  if (music.paused) {
+    music.play().then(() => setMusicState(true)).catch(() => setMusicState(false));
+  }
+}
+
+musicToggle.addEventListener("click", () => {
+  if (music.paused) {
+    tryPlay();
+  } else {
+    music.pause();
+    setMusicState(false);
+  }
+});
+
+music.play().then(() => setMusicState(true)).catch(() => {});
+
+document.addEventListener(
+  "pointerdown",
+  (e) => {
+    if (e.target.closest("#musicToggle")) return;
+    tryPlay();
+  },
+  { once: true, passive: true }
+);
+
+document.addEventListener("keydown", tryPlay, { once: true, passive: true });
+
 document.addEventListener("DOMContentLoaded", render);
