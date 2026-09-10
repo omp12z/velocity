@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VELOCITY30 — Background &amp; Methodology</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Bungee&family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("velocity30-theme");
+        if (saved === "light" || (!saved && window.matchMedia("(prefers-color-scheme: light)").matches)) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html#top" class="logo">
+        VELOCITY<span class="accent">30</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html#leaderboard">Leaderboard</a>
+        <a href="background.html" class="nav-current">Background</a>
+        <a href="index.html#top" class="nav-cta">The Index</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+          <span class="theme-icon sun">Light</span>
+          <span class="theme-icon moon">Dark</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <header id="top" class="hero page-head">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>BEHIND<br><span class="grad">THE INDEX</span></h1>
+      <p class="hero-sub">
+        How the 30 fastest cars in the world — one from each of the biggest
+        automotive brands — were chosen, and why every single entry earned its place.
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">30</span><span class="stat-label">Marques</span></div>
+        <div class="stat"><span class="stat-num">1</span><span class="stat-label">Speed King Each</span></div>
+        <div class="stat"><span class="stat-num">0</span><span class="stat-label">Random Picks</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="bg-page">
+
+    <section class="bg-block">
+      <span class="bg-index">01</span>
+      <h3>How the brands were chosen</h3>
+      <p>
+        The index covers thirty of the world's most significant automakers, drawn from
+        three distinct pillars of the industry so the list reflects the full spectrum of
+        who builds fast cars.
+      </p>
+      <ul class="bg-list">
+        <li data-n="1">Dedicated hypercar houses — companies that exist to chase speed above all else:
+          Koenigsegg, Bugatti, SSC, Hennessey, Pagani, Rimac and Pininfarina.</li>
+        <li data-n="2">Performance legacy giants — marques with decades of racing and engineering
+          pedigree: Ferrari, Porsche, McLaren, Aston Martin, Lamborghini, Lotus, Mercedes-AMG,
+          Audi, BMW and Jaguar.</li>
+        <li data-n="3">Global mainstream builders — the volume manufacturers that produced an
+          exceptional fast car: Toyota, Honda, Ford, Chevrolet, Dodge, Nissan, Hyundai, Kia,
+          Tesla, Lucid, Bentley, Rolls-Royce and Polestar.</li>
+      </ul>
+      <p>
+        A brand qualifies through global reach, racing heritage or performance influence.
+        The result is a balanced grid — never a popularity contest, never a random draw.
+      </p>
+    </section>
+
+    <section class="bg-block">
+      <span class="bg-index">02</span>
+      <h3>How the cars were chosen</h3>
+      <p>
+        Two hard rules govern every entry. First, one car per brand — a guarantee that no
+        single manufacturer can dominate the field. Second, the car must be the fastest
+        road-legal production model that brand actually builds and sells today.
+      </p>
+      <ul class="bg-list">
+        <li data-n="1">No concepts. A car must be real, certified and available to the public.</li>
+        <li data-n="2">No prototypes or one-offs. If a brand built exactly one, it stays off the list.</li>
+        <li data-n="3">No tuners. Every entry is an official factory model, not an aftermarket build.</li>
+      </ul>
+      <p>
+        If a brand releases a faster model, that new car replaces the old one on the index.
+        A car cannot enter here on reputation alone — it must be the quickest the
+        manufacturer genuinely produces.
+      </p>
+    </section>
+
+    <section class="bg-block">
+      <span class="bg-index">03</span>
+      <h3>Method and verification</h3>
+      <p>
+        The field is ranked purely by top speed in miles per hour, fastest to least fast,
+        using figures that trace back to a published claim or a documented, verified run.
+        Where two cars top out at the same number, the order is decided by objective ties.
+      </p>
+      <ul class="bg-list">
+        <li data-n="1">First tie-break: 0-60 mph — the quicker launch wins.</li>
+        <li data-n="2">Second tie-break: peak power — the stronger engine wins.</li>
+        <li data-n="3">Figures follow the manufacturer's factory specification for the road-legal
+          production version.</li>
+      </ul>
+      <p>
+        Every number on the leaderboard is deliberate and accountable. The champs here were
+        chosen by the data — never by chance.
+      </p>
+    </section>
+
+    <div class="bg-cta-row">
+      <a href="index.html#leaderboard" class="hero-cta">Back to the rankings</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-brand">VELOCITY<span class="accent">30</span></p>
+      <p class="foot-note">Figures reflect manufacturer claims and verified records. Top speed in mph, 0-60 in seconds. Ranks ordered by top speed, fastest to least fast.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var toggle = document.getElementById("themeToggle");
+      function applyTheme(theme) {
+        if (theme === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+        }
+        var light = document.documentElement.getAttribute("data-theme") === "light";
+        toggle.querySelector(".sun").classList.toggle("active", light);
+        toggle.querySelector(".moon").classList.toggle("active", !light);
+        toggle.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
+      }
+      toggle.addEventListener("click", function () {
+        var current = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+        var next = current === "light" ? "dark" : "light";
+        try { localStorage.setItem("velocity30-theme", next); } catch (e) {}
+        applyTheme(next);
+      });
+      applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark");
+    })();
+  </script>
+</body>
+</html>
