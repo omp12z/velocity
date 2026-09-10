@@ -18,6 +18,64 @@
   --nav-h: 64px;
 }
 
+/* ---------- LIGHT THEME ---------- */
+[data-theme="light"] {
+  --green: #2f7bff;
+  --green-dim: #2560d0;
+  --green-dark: #1f4ea8;
+  --green-glow: rgba(47, 123, 255, 0.25);
+  --bg: #f5f1ff;
+  --bg-2: #ece4fa;
+  --card: #ffffff;
+  --card-2: #faf7ff;
+  --line: #dcd1ef;
+  --line-bright: #2f7bff40;
+  --text: #241242;
+  --muted: #57467a;
+  --dim: #8b74b0;
+}
+
+[data-theme="light"] .nav {
+  background: rgba(245, 241, 255, 0.78);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #e6dcf5;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #b9a4dd;
+}
+
+[data-theme="light"] .speedbar {
+  background: #e6dcf5;
+}
+
+[data-theme="light"] .hero-bg {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(120, 70, 255, 0.2), transparent 60%),
+    radial-gradient(ellipse 50% 45% at 15% 90%, rgba(90, 40, 200, 0.12), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 90% 70%, rgba(60, 30, 160, 0.14), transparent 70%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+}
+
+[data-theme="light"] .tag-ev {
+  border-color: #0f9ad8;
+  color: #0f7cb0;
+  box-shadow: none;
+}
+[data-theme="light"] .tag-hybrid {
+  border-color: #6a7bf0;
+  color: #4a5adb;
+}
+[data-theme="light"] .tag-gas {
+  border-color: #e0490f;
+  color: #c24312;
+}
+
+[hidden] {
+  display: none !important;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -653,6 +711,344 @@ main {
   }
 }
 
+/* ---------- TOOLBAR / SORT ---------- */
+.flex.group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.sort-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 10px 8px 18px;
+}
+
+.sort-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.sort-select {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  background-color: var(--card);
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b74b0' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 34px 7px 14px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.sort-select:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+/* ---------- THEME TOGGLE ---------- */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--line-bright);
+  box-shadow: 0 0 16px var(--green-glow);
+}
+
+.theme-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--dim);
+  transition: all 0.2s ease;
+}
+
+.theme-icon.active {
+  background: var(--green);
+  color: #031004;
+  box-shadow: 0 0 14px var(--green-glow);
+}
+
+/* ---------- COMPARE BUTTON ---------- */
+.compare-btn {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin: 6px 0 22px;
+  padding: 11px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  background: transparent;
+  border: 1px solid var(--line-bright);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.compare-btn:hover {
+  border-color: var(--green);
+  box-shadow: 0 0 18px var(--green-glow);
+}
+
+.compare-btn.active {
+  background: var(--green);
+  color: #031004;
+  border-color: var(--green);
+  box-shadow: 0 0 22px var(--green-glow);
+}
+
+/* ---------- COMPARE TRAY ---------- */
+.compare-tray {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  background: rgba(10, 6, 18, 0.85);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--line-bright);
+}
+
+[data-theme="light"] .compare-tray {
+  background: rgba(245, 241, 255, 0.88);
+}
+
+.compare-tray-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.compare-tray-items {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.compare-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.compare-item-remove {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: var(--card-2);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.compare-item-remove:hover {
+  color: var(--text);
+}
+
+.compare-tray-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-clear,
+.btn-compare {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-clear {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+
+.btn-clear:hover {
+  color: var(--text);
+  border-color: var(--line-bright);
+}
+
+.btn-compare {
+  background: var(--green);
+  color: #031004;
+  border: 1px solid var(--green);
+  box-shadow: 0 0 20px var(--green-glow);
+}
+
+.btn-compare:disabled {
+  opacity: 0.45;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* ---------- COMPARE MODAL ---------- */
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 3, 12, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+[data-theme="light"] .modal-backdrop {
+  background: rgba(30, 15, 60, 0.35);
+}
+
+.modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(980px, 100%);
+  max-height: 86vh;
+  overflow: auto;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 34px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="light"] .modal-panel {
+  background: #ffffff;
+}
+
+.modal-panel h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 22px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.modal-close:hover {
+  color: var(--text);
+  border-color: var(--line-bright);
+}
+
+#compareTable {
+  overflow-x: auto;
+}
+
+#compareTable table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+#compareTable th,
+#compareTable td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+#compareTable th {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+#compareTable td:first-child {
+  font-size: 0.66rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dim);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+#compareTable td.best {
+  color: var(--green);
+  font-weight: 700;
+}
+
 /* ---------- FOOTER ---------- */
 .footer {
   border-top: 1px solid var(--line);
@@ -713,6 +1109,21 @@ main {
   }
   .ghost-rank {
     font-size: 6rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .modal {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .modal-panel {
+    max-height: 90vh;
+    border-radius: 18px 18px 0 0;
+    padding: 26px 16px;
+  }
+  .compare-tray-inner {
+    padding: 12px 18px;
   }
 }
 

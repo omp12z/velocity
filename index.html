@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VELOCITY30 — The Fastest Cars Of The 30 Biggest Car Companies In The World</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("velocity30-theme");
+        if (saved === "light" || (!saved && window.matchMedia("(prefers-color-scheme: light)").matches)) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
 
@@ -19,6 +29,10 @@
       <div class="nav-links">
         <a href="#leaderboard">Leaderboard</a>
         <a href="#top" class="nav-cta">The Index</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+          <span class="theme-icon sun">Light</span>
+          <span class="theme-icon moon">Dark</span>
+        </button>
       </div>
     </div>
   </nav>
@@ -42,11 +56,22 @@
   <main id="leaderboard">
     <div class="toolbar">
       <h2 class="section-title">THE <span class="accent">TOP 30</span></h2>
-      <div class="filter-chips" id="filters">
-        <button class="chip active" data-filter="all">All</button>
-        <button class="chip" data-filter="gas">Gasoline</button>
-        <button class="chip" data-filter="hybrid">Hybrid</button>
-        <button class="chip" data-filter="ev">Electric</button>
+      <div class="flex group">
+        <div class="filter-chips" id="filters">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="gas">Gasoline</button>
+          <button class="chip" data-filter="hybrid">Hybrid</button>
+          <button class="chip" data-filter="ev">Electric</button>
+        </div>
+        <label class="sort-wrap">
+          <span class="sort-label">Sort by</span>
+          <select id="sort" class="sort-select">
+            <option value="topSpeed">Top Speed</option>
+            <option value="power">Power</option>
+            <option value="zeroSixty">0-60 mph</option>
+            <option value="year">Year</option>
+          </select>
+        </label>
       </div>
       <p class="count" id="count"></p>
     </div>
@@ -59,6 +84,25 @@
       <p class="foot-note">Figures reflect manufacturer claims and verified records. Top speed in mph, 0-60 in seconds. Ranks ordered by top speed, fastest to least fast.</p>
     </div>
   </footer>
+
+  <div class="compare-tray" id="compareTray" hidden>
+    <div class="compare-tray-inner">
+      <div class="compare-tray-items" id="compareItems"></div>
+      <div class="compare-tray-actions">
+        <button class="btn-clear" id="compareClear">Clear</button>
+        <button class="btn-compare" id="compareOpen" disabled>Compare</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="compareModal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel">
+      <button class="modal-close" data-close aria-label="Close">×</button>
+      <h3>COMPARE</h3>
+      <div id="compareTable"></div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

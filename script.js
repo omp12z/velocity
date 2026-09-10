@@ -600,6 +600,9 @@ function cardHTML(car) {
         <span>${car.topKmh} km/h</span>
         <span>${pct}% of #1</span>
       </div>
+      <button type="button" class="compare-btn${compareRanks.has(car.rank) ? " active" : ""}" data-rank="${car.rank}" aria-pressed="${compareRanks.has(car.rank)}">
+        ${compareRanks.has(car.rank) ? "Remove from compare" : "Add to compare"}
+      </button>
       <p class="desc">${car.description}</p>
       </div>
     </article>
@@ -613,8 +616,9 @@ const filters = document.getElementById("filters");
 let activeFilter = "all";
 
 function render() {
-  const list =
+  const base =
     activeFilter === "all" ? cars : cars.filter((c) => c.type === activeFilter);
+  const list = sortCars(base);
 
   grid.innerHTML = list.map(cardHTML).join("");
   countEl.textContent = `${list.length} of 30 cars shown`;
@@ -630,6 +634,7 @@ function render() {
   });
 
   revealCards();
+  renderCompareTray();
 }
 
 function revealCards() {
@@ -658,7 +663,177 @@ filters.addEventListener("click", (e) => {
   activeFilter = chip.dataset.filter;
   document.querySelectorAll(".chip").forEach((c) => c.classList.toggle("active", c === chip));
   render();
-  window.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+/* ---------- SORT ---------- */
+const sortSelect = document.getElementById("sort");
+let activeSort = "topSpeed";
+
+function parsePower(val) {
+  const n = parseInt(String(val).replace(/[^0-9]/g, ""), 10);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function sortKey(car) {
+  switch (activeSort) {
+    case "power":
+      return parsePower(car.power);
+    case "zeroSixty":
+      return car.zeroSixty;
+    case "year":
+      return car.year;
+    default:
+      return car.topMph;
+  }
+}
+
+function sortCars(list) {
+  const asc = activeSort === "zeroSixty";
+  return list.slice().sort((a, b) => {
+    const av = sortKey(a);
+    const bv = sortKey(b);
+    return asc ? av - bv : bv - av;
+  });
+}
+
+sortSelect.addEventListener("change", () => {
+  activeSort = sortSelect.value;
+  render();
+});
+
+/* ---------- COMPARE ---------- */
+const MAX_COMPARE = 3;
+const compareRanks = new Set();
+
+function carByRank(rank) {
+  return cars.find((c) => c.rank === rank);
+}
+
+function renderCompareTray() {
+  const tray = document.getElementById("compareTray");
+  const items = document.getElementById("compareItems");
+  const openBtn = document.getElementById("compareOpen");
+  const hasSelection = compareRanks.size > 0;
+  tray.hidden = !hasSelection;
+  openBtn.disabled = compareRanks.size < 2;
+  items.innerHTML = [...compareRanks]
+    .map((rank) => {
+      const car = carByRank(rank);
+      return `<span class="compare-item" data-rank="${rank}">
+        ${car ? `${car.brand} ${car.model}` : ""}
+        <button type="button" class="compare-item-remove" data-rank="${rank}" aria-label="Remove ${car ? car.model : ""}">×</button>
+      </span>`;
+    })
+    .join("");
+}
+
+function toggleCompare(rank) {
+  if (compareRanks.has(rank)) {
+    compareRanks.delete(rank);
+  } else if (compareRanks.size < MAX_COMPARE) {
+    compareRanks.add(rank);
+  }
+  render();
+}
+
+grid.addEventListener("click", (e) => {
+  const btn = e.target.closest(".compare-btn");
+  if (!btn) return;
+  toggleCompare(Number(btn.dataset.rank));
+});
+
+document.getElementById("compareItems").addEventListener("click", (e) => {
+  const btn = e.target.closest(".compare-item-remove");
+  if (!btn) return;
+  compareRanks.delete(Number(btn.dataset.rank));
+  render();
+});
+
+document.getElementById("compareClear").addEventListener("click", () => {
+  compareRanks.clear();
+  render();
+});
+
+function compareTableHTML() {
+  const list = [...compareRanks].map(carByRank).filter(Boolean);
+  if (!list.length) return "";
+  const bestMph = Math.max(...list.map((c) => c.topMph));
+  const bestZero = Math.min(...list.map((c) => c.zeroSixty));
+  const rows = [
+    ["Brand", (c) => c.brand, () => false],
+    ["Model", (c) => c.model, () => false],
+    ["Year", (c) => String(c.year), () => false],
+    ["Type", (c) => TYPE_LABELS[c.type], () => false],
+    ["Engine", (c) => c.engine, () => false],
+    ["Power", (c) => c.power, () => false],
+    ["Torque", (c) => c.torque, () => false],
+    ["Drivetrain", (c) => c.drive, () => false],
+    ["Top Speed", (c) => `${c.topMph} mph / ${c.topKmh} km/h`, (c) => c.topMph === bestMph],
+    ["0-60 mph", (c) => `${c.zeroSixty.toFixed(2)} s`, (c) => c.zeroSixty === bestZero],
+  ];
+  const head = `<thead><tr><th></th>${list
+    .map((c) => `<th>${c.brand}</th>`)
+    .join("")}</tr></thead>`;
+  const body = rows
+    .map(
+      ([key, val, isBest]) =>
+        `<tr><td>${key}</td>${list
+          .map((c) => `<td class="${isBest(c) ? "best" : ""}">${val(c)}</td>`)
+          .join("")}</tr>`
+    )
+    .join("");
+  return `<table>${head}<tbody>${body}</tbody></table>`;
+}
+
+const compareModal = document.getElementById("compareModal");
+const compareTable = document.getElementById("compareTable");
+
+function openCompare() {
+  compareTable.innerHTML = compareTableHTML();
+  compareModal.hidden = false;
+  document.body.classList.add("modal-open");
+}
+
+function closeCompare() {
+  compareModal.hidden = true;
+  document.body.classList.remove("modal-open");
+}
+
+document.getElementById("compareOpen").addEventListener("click", openCompare);
+
+compareModal.querySelectorAll("[data-close]").forEach((el) =>
+  el.addEventListener("click", closeCompare)
+);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !compareModal.hidden) closeCompare();
+});
+
+/* ---------- THEME ---------- */
+const themeToggle = document.getElementById("themeToggle");
+
+function applyTheme(theme) {
+  if (theme === "light") {
+    document.documentElement.setAttribute("data-theme", "light");
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+  }
+  const isLight = document.documentElement.getAttribute("data-theme") === "light";
+  themeToggle.querySelector(".sun").classList.toggle("active", isLight);
+  themeToggle.querySelector(".moon").classList.toggle("active", !isLight);
+  themeToggle.setAttribute("aria-label", isLight ? "Switch to dark theme" : "Switch to light theme");
+}
+
+themeToggle.addEventListener("click", () => {
+  const current =
+    document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+  const next = current === "light" ? "dark" : "light";
+  try {
+    localStorage.setItem("velocity30-theme", next);
+  } catch (e) {}
+  applyTheme(next);
+});
+
+applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark");
 
 document.addEventListener("DOMContentLoaded", render);
