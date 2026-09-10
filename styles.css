@@ -1,17 +1,17 @@
 :root {
-  --green: #00ff66;
-  --green-dim: #00c94f;
-  --green-dark: #00943a;
-  --green-glow: rgba(0, 255, 102, 0.35);
-  --bg: #0a0612;
-  --bg-2: #110a1d;
-  --card: #150c26;
-  --card-2: #1b1033;
-  --line: #2c1b4a;
-  --line-bright: #00ff6640;
-  --text: #f5ecff;
-  --muted: #b3a3cc;
-  --dim: #7c6b9a;
+  --green: #2f7bff;
+  --green-dim: #2f6ae0;
+  --green-dark: #234daa;
+  --green-glow: rgba(47, 123, 255, 0.35);
+  --bg: #180b2e;
+  --bg-2: #22103f;
+  --card: #241040;
+  --card-2: #2d1550;
+  --line: #4a2b7a;
+  --line-bright: #2f7bff40;
+  --text: #f6efff;
+  --muted: #bfaadd;
+  --dim: #8b74b0;
   --font-display: "Orbitron", sans-serif;
   --font-body: "Inter", sans-serif;
   --radius: 18px;
@@ -143,8 +143,9 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(120, 70, 230, 0.25), transparent 60%),
-    radial-gradient(ellipse 40% 40% at 85% 85%, rgba(120, 70, 230, 0.12), transparent 70%),
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(140, 60, 255, 0.4), transparent 60%),
+    radial-gradient(ellipse 50% 45% at 15% 90%, rgba(90, 40, 200, 0.28), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 90% 70%, rgba(60, 30, 160, 0.3), transparent 70%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
 }
 
@@ -153,8 +154,8 @@ body {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(150, 100, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(150, 100, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(170, 120, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(170, 120, 255, 0.06) 1px, transparent 1px);
   background-size: 46px 46px;
   mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
 }
@@ -185,7 +186,7 @@ body {
 }
 
 .grad {
-  background: linear-gradient(100deg, #00ff66 0%, #7dffb2 50%, #00ff66 100%);
+  background: linear-gradient(100deg, #4d8dff 0%, #9fc3ff 50%, #4d8dff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -343,7 +344,7 @@ main {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(0, 255, 102, 0.08), transparent 60%);
+  background: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(47, 123, 255, 0.08), transparent 60%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -352,7 +353,7 @@ main {
 .card:hover {
   transform: translateY(-6px);
   border-color: var(--line-bright);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--line-bright), 0 0 44px rgba(0, 255, 102, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--line-bright), 0 0 44px rgba(47, 123, 255, 0.12);
 }
 
 .card:hover::before {
@@ -407,7 +408,7 @@ main {
   font-size: 7.5rem;
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(0, 255, 102, 0.12);
+  -webkit-text-stroke: 1px rgba(47, 123, 255, 0.12);
   pointer-events: none;
   user-select: none;
   z-index: 0;
@@ -468,14 +469,14 @@ main {
 }
 
 .tag-ev {
-  border-color: #22ffc0;
-  color: #22ffc0;
-  box-shadow: 0 0 14px rgba(34, 255, 192, 0.25);
+  border-color: #33ccff;
+  color: #33ccff;
+  box-shadow: 0 0 14px rgba(51, 204, 255, 0.25);
 }
 
 .tag-hybrid {
-  border-color: #c9ff22;
-  color: #c9ff22;
+  border-color: #7a8cff;
+  color: #7a8cff;
 }
 
 .tag-gas {
@@ -559,7 +560,7 @@ main {
 }
 
 .metric {
-  background: rgba(0, 255, 102, 0.04);
+  background: rgba(47, 123, 255, 0.05);
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 16px;
