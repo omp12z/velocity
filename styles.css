@@ -195,7 +195,7 @@ body {
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding: calc(var(--nav-h) + 36px) 24px 48px;
+  padding: calc(var(--nav-h) + 36px) 24px 76px;
 }
 
 .hero-bg {
@@ -250,6 +250,80 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 60px var(--green-glow);
+}
+
+.grad-anim {
+  background-size: 200% auto;
+  animation: gradflow 4s linear infinite;
+}
+
+@keyframes gradflow {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.hero-ghost {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-num);
+  font-weight: 400;
+  font-size: clamp(14rem, 34vw, 26rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(47, 123, 255, 0.14);
+  z-index: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hero-ticker {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  background: rgba(6, 3, 12, 0.55);
+  padding: 12px 0;
+  z-index: 2;
+}
+
+[data-theme="light"] .hero-ticker {
+  background: rgba(245, 241, 255, 0.7);
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 45s linear infinite;
+}
+
+.ticker-track span {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 0.74rem;
+  letter-spacing: 3px;
+  color: var(--muted);
+  padding: 0 26px;
+  white-space: nowrap;
+}
+
+.ticker-track span::after {
+  content: "/";
+  color: var(--green);
+  margin-left: 52px;
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .hero-sub {
@@ -631,7 +705,9 @@ main {
 .card-top-right {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .tag {
@@ -674,6 +750,21 @@ main {
   border: 1px solid var(--line);
   padding: 7px 12px;
   border-radius: 999px;
+}
+
+.origin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 7px 11px;
+  border-radius: 999px;
+  white-space: nowrap;
+  cursor: default;
 }
 
 .brand {

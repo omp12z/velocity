@@ -546,6 +546,39 @@ const CAR_IMAGES = {
   30: "images/polestar-1.jpg",
 };
 
+const ORIGINS = {
+  1: { flag: "🇸🇪", country: "Sweden", hq: "Ängelholm, Sweden" },
+  2: { flag: "🇫🇷", country: "France", hq: "Molsheim, France" },
+  3: { flag: "🇺🇸", country: "United States", hq: "West Richland, United States" },
+  4: { flag: "🇺🇸", country: "United States", hq: "Sealy, United States" },
+  5: { flag: "🇭🇷", country: "Croatia", hq: "Sveta Nedelja, Croatia" },
+  6: { flag: "🇬🇧", country: "United Kingdom", hq: "Woking, United Kingdom" },
+  7: { flag: "🇬🇧", country: "United Kingdom", hq: "Gaydon, United Kingdom" },
+  8: { flag: "🇮🇹", country: "Italy", hq: "San Cesario sul Panaro, Italy" },
+  9: { flag: "🇺🇸", country: "United States", hq: "Newark, United States" },
+  10: { flag: "🇺🇸", country: "United States", hq: "Detroit, United States" },
+  11: { flag: "🇩🇪", country: "Germany", hq: "Affalterbach, Germany" },
+  12: { flag: "🇮🇹", country: "Italy", hq: "Sant'Agata Bolognese, Italy" },
+  13: { flag: "🇮🇹", country: "Italy", hq: "Cambiano, Italy" },
+  14: { flag: "🇬🇧", country: "United Kingdom", hq: "Hethel, United Kingdom" },
+  15: { flag: "🇩🇪", country: "Germany", hq: "Stuttgart, Germany" },
+  16: { flag: "🇬🇧", country: "United Kingdom", hq: "Crewe, United Kingdom" },
+  17: { flag: "🇺🇸", country: "United States", hq: "Austin, United States" },
+  18: { flag: "🇬🇧", country: "United Kingdom", hq: "Coventry, United Kingdom" },
+  19: { flag: "🇩🇪", country: "Germany", hq: "Ingolstadt, Germany" },
+  20: { flag: "🇮🇹", country: "Italy", hq: "Maranello, Italy" },
+  21: { flag: "🇯🇵", country: "Japan", hq: "Yokohama, Japan" },
+  22: { flag: "🇩🇪", country: "Germany", hq: "Munich, Germany" },
+  23: { flag: "🇺🇸", country: "United States", hq: "Dearborn, United States" },
+  24: { flag: "🇯🇵", country: "Japan", hq: "Tokyo, Japan" },
+  25: { flag: "🇺🇸", country: "United States", hq: "Auburn Hills, United States" },
+  26: { flag: "🇰🇷", country: "South Korea", hq: "Seoul, South Korea" },
+  27: { flag: "🇰🇷", country: "South Korea", hq: "Seoul, South Korea" },
+  28: { flag: "🇯🇵", country: "Japan", hq: "Toyota City, Japan" },
+  29: { flag: "🇬🇧", country: "United Kingdom", hq: "Goodwood, United Kingdom" },
+  30: { flag: "🇸🇪", country: "Sweden", hq: "Gothenburg, Sweden" },
+};
+
 const MAX_SPEED = 330;
 
 const TYPE_LABELS = {
@@ -563,6 +596,7 @@ const TYPE_TAGS = {
 function cardHTML(car) {
   const pct = Math.min(100, Math.round((car.topMph / MAX_SPEED) * 100));
   const img = CAR_IMAGES[car.rank];
+  const origin = ORIGINS[car.rank];
   return `
     <article class="card reveal" data-type="${car.type}">
       <span class="ghost-rank">${String(car.rank).padStart(2, "0")}</span>
@@ -571,6 +605,7 @@ function cardHTML(car) {
       <div class="card-top">
         <span class="rank ${car.rank > 10 ? "rank-muted" : ""}">#${String(car.rank).padStart(2, "0")}</span>
         <div class="card-top-right">
+          ${origin ? `<span class="origin" title="HQ: ${origin.hq}">${origin.flag} ${origin.country}</span>` : ""}
           <span class="tag ${TYPE_TAGS[car.type]}">${TYPE_LABELS[car.type]}</span>
           <span class="year">${car.year}</span>
         </div>
@@ -635,6 +670,32 @@ function render() {
 
   revealCards();
   renderCompareTray();
+}
+
+function animateCounts() {
+  const els = document.querySelectorAll("[data-count]");
+  if (!els.length || !("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = Number(el.dataset.count);
+        const duration = 1400;
+        const start = performance.now();
+        function tick(now) {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = Math.round(target * eased);
+          if (t < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        io.unobserve(el);
+      });
+    },
+    { threshold: 0.4 }
+  );
+  els.forEach((el) => io.observe(el));
 }
 
 function revealCards() {
@@ -762,6 +823,10 @@ function compareTableHTML() {
   const rows = [
     ["Brand", (c) => c.brand, () => false],
     ["Model", (c) => c.model, () => false],
+    ["Country", (c) => {
+      const o = ORIGINS[c.rank];
+      return o ? `${o.flag} ${o.country}` : "—";
+    }, () => false],
     ["Year", (c) => String(c.year), () => false],
     ["Type", (c) => TYPE_LABELS[c.type], () => false],
     ["Engine", (c) => c.engine, () => false],
@@ -838,7 +903,7 @@ applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "li
 
 /* ---------- MUSIC ---------- */
 const musicToggle = document.getElementById("musicToggle");
-const music = new Audio("audio/background.mp3");
+const music = new Audio("https://open.spotify.com/track/5jQfCESa66fpDY1FZrVsAL?si=7ca98227a04143ef");
 music.loop = true;
 music.volume = 0.5;
 music.preload = "auto";
@@ -879,3 +944,4 @@ document.addEventListener(
 document.addEventListener("keydown", tryPlay, { once: true, passive: true });
 
 document.addEventListener("DOMContentLoaded", render);
+animateCounts();
